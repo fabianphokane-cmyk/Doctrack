@@ -28,7 +28,9 @@ def box_history(request: Request, box_id: str):
                 "action": row[0],
                 "user_name": row[1],
                 "timestamp": row[2].strftime("%d %B %Y, %H:%M")
-            }
+            } 
+
+            
         )
 
     return templates.TemplateResponse(
@@ -108,4 +110,8 @@ def box_history(request: Request, box_id: str):
 
 
 templates = Jinja2Templates(directory="templates")
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+
   
