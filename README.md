@@ -4,6 +4,14 @@ WHERE box_id = 'PHUT-FIN-006'
 ORDER BY timestamp ASC;
 
 
+from fastapi import FastAPI, Request, UploadFile, File
+from fastapi.templating import Jinja2Templates
+
+
+
+
+
+
 SELECT * FROM logs ORDER BY timestamp DESC;
 
 
