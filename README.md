@@ -62,3 +62,19 @@ def dashboard(request: Request, search: str = ""):
             "search": search
         }
     )
+
+<form method="get" action="/dashboard" style="margin-bottom: 20px;">
+    <input
+        type="text"
+        name="search"
+        placeholder="Search box ID, client, project, status..."
+        value="{{ search }}"
+        style="padding: 10px; width: 300px; border-radius: 8px; border: 1px solid #ccc;"
+    >
+    <button
+        type="submit"
+        style="padding: 10px 16px; border: none; border-radius: 8px; background: #111827; color: white; cursor: pointer;"
+    >
+        Search
+    </button>
+</form>
