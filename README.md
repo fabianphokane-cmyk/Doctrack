@@ -107,5 +107,5 @@ def box_history(request: Request, box_id: str):
 <a href="/boxes/{{ box.box_id }}/history">View History</a>
 
 
-
+templates = Jinja2Templates(directory="templates")
   
