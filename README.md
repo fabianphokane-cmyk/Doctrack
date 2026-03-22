@@ -1,6 +1,6 @@
 # Doctrack
-@app.get("/boxes/{box_id}/history")
-def box_history(box_id: str):
+@app.get("/boxes/{box_id}/history/view")
+def box_history_view(request: Request, box_id: str):
     cursor.execute(
         """
         SELECT action, user_name, timestamp
@@ -20,9 +20,15 @@ def box_history(box_id: str):
             "timestamp": str(row[2])
         })
 
-    return {
-        "box_id": box_id,
-        "history": history
-    }
+    return templates.TemplateResponse(
+        "history.html",
+        {
+            "request": request,
+            "box_id": box_id,
+            "history": history
+        }
+    )
 
-        
+<a href="/boxes/{{ box.box_id }}/history/view">View History</a>
+
+    
