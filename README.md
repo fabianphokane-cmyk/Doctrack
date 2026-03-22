@@ -1,21 +1,63 @@
-<td>
-    <span class="status {{ box.status }}">{{ box.status }}</span>
-</td>
-<td>
-    <a href="/boxes/{{ box.box_id }}/history/view">View History</a><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 30px;
+        }
 
-    {% if box.status == "ready_for_qa" %}
-    <form action="/dashboard/qa_approve/{{ box.box_id }}" method="post" style="display:inline;">
-        <button type="submit">Approve</button>
-    </form>
-    <form action="/dashboard/qa_reject/{{ box.box_id }}" method="post" style="display:inline;">
-        <button type="submit">Reject</button>
-    </form>
-    {% elif box.status == "qa_passed" or box.status == "ready_for_delivery" %}
-    <form action="/dashboard/delivered/{{ box.box_id }}" method="post" style="display:inline;">
-        <button type="submit">Mark Delivered</button>
-    </form>
-    {% else %}
-    -
-    {% endif %}
-</td>
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .history-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 700px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .event {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .event:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            color: #666;
+            font-size: 14px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #111827;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>History for {{ box_id }}</h1>
+
+    <div class="history-box">
+        {% for log in history %}
+        <div class="event">
+            <strong>{{ log.user_name }}</strong> {{ log.action }}
+            <div class="time">{{ log.timestamp }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="/dashboard">← Back to Dashboard</a>
+</body>
+</html> 
