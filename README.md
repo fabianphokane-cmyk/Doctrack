@@ -455,4 +455,19 @@ def home(request: Request):
 
 
 
+
+nAAAAA
+
+
+<nav style="background:#111827; padding:14px 20px; margin:-30px -30px 30px -30px;">
+    <a href="/" style="color:white; text-decoration:none; margin-right:20px; font-weight:bold;">Home</a>
+    <a href="/dashboard" style="color:white; text-decoration:none; margin-right:20px;">Dashboard</a>
+    <a href="/scanner" style="color:white; text-decoration:none; margin-right:20px;">Scanner</a>
+    <a href="/indexing" style="color:white; text-decoration:none; margin-right:20px;">Indexing</a>
+    <a href="/qa" style="color:white; text-decoration:none; margin-right:20px;">QA</a>
+    <a href="/delivery" style="color:white; text-decoration:none;">Delivery</a>
+</nav>
+
+
+
     
