@@ -1,34 +1,21 @@
-# Doctrack
-@app.get("/boxes/{box_id}/history/view")
-def box_history_view(request: Request, box_id: str):
-    cursor.execute(
-        """
-        SELECT action, user_name, timestamp
-        FROM logs
-        WHERE box_id = %s
-        ORDER BY timestamp ASC
-        """,
-        (box_id,)
-    )
-    rows = cursor.fetchall()
+<td>
+    <span class="status {{ box.status }}">{{ box.status }}</span>
+</td>
+<td>
+    <a href="/boxes/{{ box.box_id }}/history/view">View History</a><br><br>
 
-    history = []
-    for row in rows:
-        history.append({
-            "action": row[0],
-            "user_name": row[1],
-            "timestamp": str(row[2])
-        })
-
-    return templates.TemplateResponse(
-        "history.html",
-        {
-            "request": request,
-            "box_id": box_id,
-            "history": history
-        }
-    )
-
-<a href="/boxes/{{ box.box_id }}/history/view">View History</a>
-
-    
+    {% if box.status == "ready_for_qa" %}
+    <form action="/dashboard/qa_approve/{{ box.box_id }}" method="post" style="display:inline;">
+        <button type="submit">Approve</button>
+    </form>
+    <form action="/dashboard/qa_reject/{{ box.box_id }}" method="post" style="display:inline;">
+        <button type="submit">Reject</button>
+    </form>
+    {% elif box.status == "qa_passed" or box.status == "ready_for_delivery" %}
+    <form action="/dashboard/delivered/{{ box.box_id }}" method="post" style="display:inline;">
+        <button type="submit">Mark Delivered</button>
+    </form>
+    {% else %}
+    -
+    {% endif %}
+</td>
