@@ -37,3 +37,25 @@ def mark_ready(box_id: str):
     return RedirectResponse(url="/scanner", status_code=303)
 
 
+
+
+@app.post("/indexing/send_to_qa/{box_id}")
+def send_to_qa(box_id: str):
+    cursor.execute(
+        """
+        UPDATE boxes
+        SET status = %s
+        WHERE box_id = %s
+        """,
+        ("ready_for_qa", box_id)
+    )
+    conn.commit()
+
+    return RedirectResponse(url="/indexing", status_code=303)
+
+
+    <td>
+    <form action="/indexing/send_to_qa/{{ box.box_id }}" method="post">
+        <button type="submit">Send to QA</button>
+    </form>
+</td>
