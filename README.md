@@ -348,6 +348,110 @@ def mark_delivered(box_id: str):
 
 
 
+new new new v2 VeV2 
+
+@app.get("/")
+def home(request: Request):
+    return templates.TemplateResponse(
+        "home.html",
+        {"request": request}
+    )
+
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocTrack Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+
+        .card h2 {
+            margin: 0 0 8px;
+            font-size: 22px;
+            color: #111827;
+        }
+
+        .card p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>DocTrack</h1>
+    <p>Select a section to continue.</p>
+
+    <div class="grid">
+        <a class="card" href="/dashboard">
+            <h2>Dashboard</h2>
+            <p>View all boxes and workflow status.</p>
+        </a>
+
+        <a class="card" href="/scanner">
+            <h2>Scanner</h2>
+            <p>View boxes waiting to be scanned.</p>
+        </a>
+
+        <a class="card" href="/indexing">
+            <h2>Indexing</h2>
+            <p>View boxes ready for indexing.</p>
+        </a>
+
+        <a class="card" href="/qa">
+            <h2>QA</h2>
+            <p>Review and approve indexed boxes.</p>
+        </a>
+
+        <a class="card" href="/delivery">
+            <h2>Delivery</h2>
+            <p>Mark approved boxes as delivered.</p>
+        </a>
+    </div>
+</body>
+</html>
+
+
+
 
 
 
