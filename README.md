@@ -1,95 +1,186 @@
-<!DOCTYPE html>
+@app.get("/scanner")
+def scanner_page(request: Request):
+    cursor.execute(
+        """
+        SELECT box_id, client, project, description, status
+        FROM boxes
+        WHERE status = %s
+        ORDER BY id
+        """,
+        ("received",)
+    )
+    rows = cursor.fetchall()
+
+    boxes = []
+    for row in rows:
+        boxes.append({
+            "box_id": row[0],
+            "client": row[1],
+            "project": row[2],
+            "description": row[3],
+            "status": row[4]
+        })
+
+    return templates.TemplateResponse(
+        "scanner.html",
+        {
+            "request": request,
+            "boxes": boxes
+        }
+    )
+
+
+@app.get("/indexing")
+def indexing_page(request: Request):
+    cursor.execute(
+        """
+        SELECT box_id, client, project, description, status
+        FROM boxes
+        WHERE status = %s
+        ORDER BY id
+        """,
+        ("ready_for_index",)
+    )
+    rows = cursor.fetchall()
+
+    boxes = []
+    for row in rows:
+        boxes.append({
+            "box_id": row[0],
+            "client": row[1],
+            "project": row[2],
+            "description": row[3],
+            "status": row[4]
+        })
+
+    return templates.TemplateResponse(
+        "indexing.html",
+        {
+            "request": request,
+            "boxes": boxes
+        }
+    )
+
+
+@app.get("/qa")
+def qa_page(request: Request):
+    cursor.execute(
+        """
+        SELECT box_id, client, project, description, status
+        FROM boxes
+        WHERE status = %s
+        ORDER BY id
+        """,
+        ("ready_for_qa",)
+    )
+    rows = cursor.fetchall()
+
+    boxes = []
+    for row in rows:
+        boxes.append({
+            "box_id": row[0],
+            "client": row[1],
+            "project": row[2],
+            "description": row[3],
+            "status": row[4]
+        })
+
+    return templates.TemplateResponse(
+        "qa.html",
+        {
+            "request": request,
+            "boxes": boxes
+        }
+    )
+
+
+@app.get("/delivery")
+def delivery_page(request: Request):
+    cursor.execute(
+        """
+        SELECT box_id, client, project, description, status
+        FROM boxes
+        WHERE status = %s
+        ORDER BY id
+        """,
+        ("qa_passed",)
+    )
+    rows = cursor.fetchall()
+
+    boxes = []
+    for row in rows:
+        boxes.append({
+            "box_id": row[0],
+            "client": row[1],
+            "project": row[2],
+            "description": row[3],
+            "status": row[4]
+        })
+
+    return templates.TemplateResponse(
+        "delivery.html",
+        {
+            "request": request,
+            "boxes": boxes
+        }
+    )
+
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocTrack Dashboard</title>
+    <title>Scanner Queue</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            margin: 0;
-            padding: 30px;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-            color: #222;
-        }
-
-        .stats {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            min-width: 200px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .card h2 {
-            margin: 0;
-            font-size: 28px;
-            color: #111;
-        }
-
-        .card p {
-            margin: 8px 0 0;
-            color: #666;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        th, td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background: #111827;
-            color: white;
-        }
-
-        tr:hover {
-            background: #f9fafb;
-        }
-
-        .status {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-            background: #e5e7eb;
-            color: #111827;
-        }
-
-        .received { background: #ccc; color: #333; }
-        .ready_for_index { background: #3498db; color: white; }
-        .ready_for_qa { background: #f39c12; color: white; }
-        .qa_passed { background: #2ecc71; color: white; }
-        .delivered { background: #27ae60; color: white; }
-        .indexing { background: #e74c3c; color: white; }
+        body { font-family: Arial, sans-serif; background: #f4f6f8; padding: 30px; }
+        h1 { margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 14px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background: #111827; color: white; }
     </style>
 </head>
 <body>
-
-
-
-
+    <h1>Scanner Queue</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Box ID</th>
+                <th>Client</th>
+                <th>Project</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for box in boxes %}
+            <tr>
+                <td>{{ box.box_id }}</td>
+                <td>{{ box.client }}</td>
+                <td>{{ box.project }}</td>
+                <td>{{ box.description }}</td>
+                <td>{{ box.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </body>
 </html>
+
+
+
+
+<title>Indexing Queue</title>
+<h1>Indexing Queue</h1>
+
+<title>QA Queue</title>
+<h1>QA Queue</h1>
+
+
+<title>Delivery Queue</title>
+<h1>Delivery Queue</h1>
+
+
+
+
+
+    
