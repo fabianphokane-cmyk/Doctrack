@@ -68,23 +68,13 @@
         }
 
         .status {
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            background: #e5e7eb;
-            color: #111827;
-            display: inline-block;
-        }
-    </style> 
-<head>
-    <style>
-        .status {
             display: inline-block;
             padding: 5px 10px;
             border-radius: 12px;
             font-size: 12px;
             font-weight: bold;
+            background: #e5e7eb;
+            color: #111827;
         }
 
         .received { background: #ccc; color: #333; }
@@ -96,84 +86,10 @@
     </style>
 </head>
 <body>
-    <h1>DocTrack Dashboard</h1>
-    <form method="get" action="/dashboard" style="margin-bottom: 20px;">
-    <input
-        type="text"
-        name="search"
-        placeholder="Search box ID, client, project, status..."
-        value="{{ search }}"
-        style="padding: 10px; width: 300px; border-radius: 8px; border: 1px solid #ccc;"
-    >
-    <button
-        type="submit"
-        style="padding: 10px 16px; border: none; border-radius: 8px; background: #111827; color: white; cursor: pointer;"
-    >
-        Search
-    </button>
-</form>
 
-    <div class="stats">
-        <div class="card">
-            <h2>{{ total_boxes }}</h2>
-            <p>Total Boxes</p>
-        </div>
 
-        <div class="card">
-            <h2>{{ ready_for_index }}</h2>
-            <p>Ready for Index</p>
-        </div>
 
-        <div class="card">
-            <h2>{{ ready_for_qa }}</h2>
-            <p>Ready for QA</p>
-        </div>
 
-        <div class="card">
-            <h2>{{ delivered }}</h2>
-            <p>Delivered</p>
-        </div>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Box ID</th>
-                <th>Client</th>
-                <th>Project</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-       <tbody>
-    {% for box in boxes %}
-    <tr>
-        <td>{{ box.box_id }}</td>
-        <td>{{ box.client }}</td>
-        <td>{{ box.project }}</td>
-        <td>{{ box.description }}</td>
- <td>
-    <span class="status {{ box.status }}">{{ box.status }}</span>
-</td>
-<td>
-    <a href="/boxes/{{ box.box_id }}/history/view">View History</a><br><br>
-
-    {% if box.status == "ready_for_qa" %}
-    <form action="/dashboard/qa_approve/{{ box.box_id }}" method="post" style="display:inline;">
-        <button type="submit">Approve</button>
-    </form>
-    <form action="/dashboard/qa_reject/{{ box.box_id }}" method="post" style="display:inline;">
-        <button type="submit">Reject</button>
-    </form>
-    {% elif box.status == "qa_passed" or box.status == "ready_for_delivery" %}
-    <form action="/dashboard/delivered/{{ box.box_id }}" method="post" style="display:inline;">
-        <button type="submit">Mark Delivered</button>
-    </form>
-    {% else %}
-    -
-    {% endif %}
-</td>
-</tr>
-{% endfor %} 
-</tbody>
+    </table>
+</body>
+</html>
